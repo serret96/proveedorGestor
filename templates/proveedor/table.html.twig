@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Table Proveedor{% endblock %}
+
+{% block body %}
+{#Script to validate if we want to delete a proveedor#}
+    <script type="text/javascript">
+
+        function ConfirmDelete()
+        {
+            var respuesta = confirm("Estas seguro de eliminar este proveedor?");
+            return respuesta === true;
+        }
+
+    </script>
+
+<div class="row" style="justify-content: center;margin-top: 150px;">
+    <div class="col-lg-6" >
+        <a class="btn btn-primary" href="{{ path('new')}}">Insert New</a>
+            <div class="card-body table-responsive">
+                <table class="table table-striped" id="mydatatable" style="justify-content: center">
+                    <thead>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Tipo</th>
+                        <th>Activo</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody>
+                    {% for proveedor in findAll%}
+                        <tr>
+                            <td>{{ proveedor.id }}</td>
+                            <td>{{ proveedor.Nombre }}</td>
+                            <td>{{ proveedor.correo }}</td>
+                            <td>{{ proveedor.telefono }}</td>
+                            <td>{{ proveedor.tipo }}</td>
+                            <td>{% if proveedor.activo == 1 %}
+                                    Actiu
+                                    {% else %}
+                                    Inactiu
+                                {% endif %}
+                            </td>
+                            <td><a class="btn btn-success" href="{{ path('modify', {'id':proveedor.id}) }}">Update</a></td>
+                            <td><a class="btn btn-danger boxed-action" href="{{ path('remove', {'id':proveedor.id}) }}" onclick="return ConfirmDelete()">Delete</a></td>
+
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
